@@ -1,12 +1,12 @@
 FROM debian:wheezy
 MAINTAINER Tim Haak <tim@haak.co.uk>
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV TRANSMISSION_VERSION 2.84
-ENV LIBEVENT_VERSION 2.0.18
-ENV LANG en_US.UTF-8
-ENV LC_ALL C.UTF-8
-ENV LANGUAGE en_US.UTF-8
+ENV DEBIAN_FRONTEND="noninteractive" \
+    LANG="en_US.UTF-8" \
+    LC_ALL="C.UTF-8" \
+    LANGUAGE="en_US.UTF-8" \
+    LIBEVENT_VERSION="2.0.22" \
+    TRANSMISSION_VERSION="2.84"
 
 COPY settings.json /var/lib/transmission-daemon/info/settings.json
 
@@ -43,17 +43,16 @@ RUN apt-get -q update && \
     rm -rf /var/lib/apt/lists/* &&\
     rm -rf /tmp/*
 
-
-VOLUME ["/downloads"]
-VOLUME ["/incomplete"]
-VOLUME ["/watch"]
-VOLUME ["/config"]
+VOLUME ["/downloads", "/incomplete", "/watch", "/config"]
 
 ADD ./settings.json /var/lib/transmission-daemon/info/settings.json
 
 ADD ./start.sh /start.sh
 RUN chmod u+x  /start.sh
 
-EXPOSE 9091
+EXPOSE 9091 45555
+
+ENV USERNAME="transmission" \
+    PASSWORD="password"
 
 CMD ["/start.sh"]
