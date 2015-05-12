@@ -22,10 +22,11 @@ RUN apt-get -q update && \
     CFLAGS="-Os -march=native" ./configure && make  &&\
     checkinstall -y &&\
     cd /  &&\
-    rm -rf /libevent  &&\
+    rm -rf /libevent
 
-    curl -L https://transmission.cachefly.net/transmission-${TRANSMISSION_VERSION}.tar.xz -o transmission.tgz && \
-    tar -xvf transmission.t*gz -C /  &&\
+RUN curl -L https://transmission.cachefly.net/transmission-${TRANSMISSION_VERSION}.tar.xz -o transmission.tgz
+
+RUN tar -xvf transmission.t*gz -C /  &&\
     mv /transmission-* /transmission/ &&\
     rm  /transmission.t*gz &&\
     cd transmission   &&\
