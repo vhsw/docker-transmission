@@ -24,9 +24,9 @@ RUN apt-get -q update && \
     cd /  &&\
     rm -rf /libevent
 
-RUN curl -L https://transmission.cachefly.net/transmission-${TRANSMISSION_VERSION}.tar.xz -o transmission.tgz
+RUN curl -L http://download.transmissionbt.com/files/transmission-${TRANSMISSION_VERSION}.tar.xz -o transmission.tar.xz
 
-RUN tar -xvf transmission.t*gz -C /  &&\
+RUN tar -xJvf transmission.tar.xz -C /  &&\
     mv /transmission-* /transmission/ &&\
     rm  /transmission.t*gz &&\
     cd transmission   &&\
