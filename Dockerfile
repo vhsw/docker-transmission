@@ -13,9 +13,11 @@ COPY settings.json /var/lib/transmission-daemon/info/settings.json
 RUN apt-get -q update && \
     apt-get -qy --force-yes dist-upgrade && \
     apt-get install -qy --force-yes libcurl4-openssl-dev libssl-dev pkg-config build-essential checkinstall intltool\
-        wget tar ca-certificates curl unrar-free  && \
-    curl -L https://github.com/downloads/libevent/libevent/libevent-${LIBEVENT_VERSION}-stable.tar.gz  -o  libevent.tar.gz && \
-    tar -xvf libevent.t*gz -C /  &&\
+        wget tar ca-certificates curl unrar-free
+
+RUN curl -L https://github.com/downloads/libevent/libevent/libevent-${LIBEVENT_VERSION}-stable.tar.gz  -o  libevent.tar.gz
+
+RUN tar -xjpvf libevent.tar.gz -C /  &&\
     mv /libevent-* /libevent/ &&\
     rm  /libevent.t*gz &&\
     cd /libevent  &&\
