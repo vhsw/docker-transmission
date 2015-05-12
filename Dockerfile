@@ -15,7 +15,7 @@ RUN apt-get -q update && \
     apt-get install -qy --force-yes libcurl4-openssl-dev libssl-dev pkg-config build-essential checkinstall intltool\
         wget tar ca-certificates curl unrar-free
 
-RUN curl -L https://github.com/downloads/libevent/libevent/libevent-${LIBEVENT_VERSION}-stable.tar.gz  -o  libevent.tar.gz
+RUN curl -L https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz -o  libevent.tar.gz
 
 RUN tar -xjpvf libevent.tar.gz -C /  &&\
     mv /libevent-* /libevent/ &&\
