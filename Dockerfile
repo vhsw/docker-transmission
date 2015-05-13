@@ -15,9 +15,9 @@ RUN apt-get -q update && \
     apt-get install -qy --force-yes libcurl4-openssl-dev libssl-dev pkg-config build-essential checkinstall intltool\
         wget tar ca-certificates curl unrar-free
 
-RUN curl -L https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz -o  libevent.tar.gz
+RUN curl -L https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz -o  /libevent.tar.gz
 
-RUN tar -xjpvf libevent.tar.gz -C /  &&\
+RUN tar -xzpvf /libevent.tar.gz -C /  &&\
     mv /libevent-* /libevent/ &&\
     rm  /libevent.t*gz &&\
     cd /libevent  &&\
@@ -26,11 +26,11 @@ RUN tar -xjpvf libevent.tar.gz -C /  &&\
     cd /  &&\
     rm -rf /libevent
 
-RUN curl -L http://download.transmissionbt.com/files/transmission-${TRANSMISSION_VERSION}.tar.xz -o transmission.tar.xz
+RUN curl -L http://download.transmissionbt.com/files/transmission-${TRANSMISSION_VERSION}.tar.xz -o /transmission.tar.xz
 
-RUN tar -xJvf transmission.tar.xz -C /  &&\
+RUN tar -xJvf /transmission.tar.xz -C /  &&\
     mv /transmission-* /transmission/ &&\
-    rm  /transmission.t*gz &&\
+    rm  /transmission.t*xz &&\
     cd transmission   &&\
     CFLAGS="-Os -march=native" ./configure    &&\
     make   &&\
