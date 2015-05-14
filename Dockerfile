@@ -10,37 +10,10 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 
 COPY settings.json /var/lib/transmission-daemon/info/settings.json
 
-RUN apt-get -q update && \
+RUN echo "deb http://ppa.launchpad.net/transmissionbt/ppa/ubuntu trusty main"  > /etc/apt/sources.list.d/transmission.list
+    apt-get -q update && \
     apt-get -qy --force-yes dist-upgrade && \
-    apt-get install -qy --force-yes ca-certificates libcurl4-openssl-dev libssl-dev pkg-config build-essential checkinstall intltool \
-        wget tar curl unrar-free procps && \
-    curl -L https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz -o  /libevent.tar.gz  && \
-    tar -xzpvf /libevent.tar.gz -C / && \
-    mv /libevent-* /libevent/ && \
-    rm  /libevent.t*gz && \
-    cd /libevent && \
-    CFLAGS="-Os -march=native" ./configure && \
-    make && \
-    checkinstall -y && \
-    ln -sf /usr/local/lib/libevent-2.0.so.5 /lib && \
-    cd / && \
-    rm -rf /libevent && \
-    curl -L http://download.transmissionbt.com/files/transmission-${TRANSMISSION_VERSION}.tar.xz -o /transmission.tar.xz && \
-    tar -xJvf /transmission.tar.xz -C / && \
-    mv /transmission-* /transmission/ && \
-    rm  /transmission.t*xz && \
-    cd /transmission  && \
-    export PKG_CONFIG_PATH="/libevent/lib/pkgconfig" && \
-    CFLAGS="-Os -march=native" ./configure   && \
-    make  && \
-    mkdir -p '/usr/local/share/transmission/web/images' && \
-    mkdir -p '/usr/local/share/transmission/web/style/jqueryui/images' && \
-    mkdir -p '/usr/local/share/transmission/web/style/transmission/images/buttons' && \
-    mkdir -p '/usr/local/share/transmission/web/javascript/jquery' && \
-    mkdir -p '/usr/local/share/man' && \
-    checkinstall -y && \
-    rm -rf /transmission && \
-    apt-get purge  -qy libcurl4-openssl-dev libssl-dev pkg-config build-essential checkinstall intltool && \
+    apt-get install -qy --force-yes transmission ca-certificates wget tar curl unrar-free procps && \
     apt-get autoremove  -qy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
