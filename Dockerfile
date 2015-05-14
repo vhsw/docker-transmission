@@ -10,10 +10,12 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 
 COPY settings.json /var/lib/transmission-daemon/info/settings.json
 
-RUN echo "deb http://ppa.launchpad.net/transmissionbt/ppa/ubuntu trusty main"  > /etc/apt/sources.list.d/transmission.list
+RUN apt-get -q update && \
+    apt-get install -y python-software-properties software-properties-common && \
+    add-apt-repository -y ppa:transmissionbt/ppa && \
     apt-get -q update && \
     apt-get -qy --force-yes dist-upgrade && \
-    apt-get install -qy --force-yes transmission ca-certificates wget tar curl unrar-free procps && \
+    apt-get install -qy --force-yes transmission-daemon ca-certificates wget tar curl unrar-free procps && \
     apt-get autoremove  -qy && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
