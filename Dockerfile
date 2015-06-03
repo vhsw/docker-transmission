@@ -1,23 +1,13 @@
-FROM ubuntu:trusty
-MAINTAINER Tim Haak <tim@haak.co.uk>
-
-ENV DEBIAN_FRONTEND="noninteractive" \
-    LANG="en_US.UTF-8" \
-    LC_ALL="C.UTF-8" \
-    LANGUAGE="en_US.UTF-8" \
-    LIBEVENT_VERSION="2.0.22" \
-    TRANSMISSION_VERSION="2.84"
+FROM timhaak/base:latest
+MAINTAINER tim@haak.co.uk
 
 COPY settings.json /var/lib/transmission-daemon/info/settings.json
 
-RUN apt-get -q update && \
-    apt-get install -y python-software-properties software-properties-common && \
-    add-apt-repository -y ppa:transmissionbt/ppa && \
+RUN add-apt-repository -y ppa:transmissionbt/ppa && \
     apt-get -q update && \
-    apt-get -qy --force-yes dist-upgrade && \
     apt-get install -qy --force-yes transmission-daemon ca-certificates wget tar curl unrar-free procps && \
-    apt-get autoremove  -qy && \
-    apt-get clean && \
+    apt-get -y autoremove && \
+    apt-get -y clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
 
