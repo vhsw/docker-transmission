@@ -1,4 +1,4 @@
-FROM timhaak/base:latest
+FROM timhaak/base
 MAINTAINER tim@haak.co.uk
 
 COPY settings.json /var/lib/transmission-daemon/info/settings.json
