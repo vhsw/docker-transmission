@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker build --rm --no-cache -t timhaak/transmission .
+docker build --rm --no-cache --pull  -t timhaak/transmission .
