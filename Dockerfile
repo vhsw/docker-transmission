@@ -1,24 +1,24 @@
-FROM timhaak/base
-MAINTAINER Tim Haak <tim@haak.co>
+FROM alpine:latest
+LABEL maintainer="Alexey Dubrov <vhsw@ya.ru>" \
+      cloned_from="timhaak/docker-transmission"
 
-COPY settings.json /var/lib/transmission-daemon/info/settings.json
+# because transmissions asks for this
+# currently not supported by kernel
+# RUN echo "net.core.rmem_max = 4194304" >> /etc/sysctl.conf 
+# RUN echo "net.core.wmem_max = 1048576" >> /etc/sysctl.conf 
+# RUN sysctl -p
 
-RUN add-apt-repository -y ppa:transmissionbt/ppa && \
-    apt-get -q update && \
-    apt-get install -qy --force-yes transmission-daemon ca-certificates wget tar curl unrar-free procps && \
-    apt-get -y autoremove && \
-    apt-get -y clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/*
+RUN apk --no-cache add transmission-daemon 
+RUN rm /etc/conf.d/transmission-daemon
+COPY settings.json /var/transmission/config/settings.json
+RUN mkdir /config
 
 VOLUME ["/downloads", "/incomplete", "/watch", "/config"]
 
-ADD ./settings.json /var/lib/transmission-daemon/info/settings.json
-
-ADD ./start.sh /start.sh
+COPY start.sh /start.sh
 RUN chmod u+x  /start.sh
 
-EXPOSE 9091 45555
+EXPOSE 9091 45555 45555/udp
 
 ENV USERNAME="transmission" \
     PASSWORD="password"
