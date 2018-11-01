@@ -6,14 +6,15 @@ Requires=docker.service, openvpn.service
 [Service]
 TimeoutStartSec=0
 Restart=always
-ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker stop %p
-ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker rm %p
-ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker pull vhsw/transmission:latest
-ExecStart=/storage/.kodi/addons/service.system.docker/bin/docker run --rm \
+ExecStartPre=-/usr/bin/docker stop %p
+ExecStartPre=-/usr/bin/docker rm %p
+ExecStartPre=-/usr/bin/docker pull vhsw/transmission:latest
+ExecStart=/usr/bin/docker run --rm \
                               --name %p \
                               -v /storage/downloads:/downloads \
                               -v /storage/transmission/config:/config \
                               -p 45555:45555 \
+                              -p 45555:45555/udp \
                               -p 9091:9091 \
                               -e "USERNAME=kodi" \
                               -e "PASSWORD=kodi" \
