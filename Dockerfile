@@ -20,7 +20,7 @@ RUN chmod u+x  /start.sh
 
 EXPOSE 9091 45555 45555/udp
 
-ENV USERNAME="transmission" \
-    PASSWORD="password"
+ENV USERNAME="kodi" \
+    PASSWORD="kodi"
 
 CMD ["/start.sh"]
