@@ -4,18 +4,20 @@ Requires=docker.service openvpn.service
 After=docker.service openvpn.service
  
 [Service]
-TimeoutStartSec=60
 Restart=always
-ExecStartPre=-docker stop %p
-ExecStartPre=-docker rm %p
-ExecStartPre=-docker pull vhsw/transmission
-ExecStart=docker run --rm \
+RestartSec=1m
+StartLimitInterval=0
+StartLimitBurst=0
+ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker stop %p
+ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker rm %p
+ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker pull vhsw/transmission
+ExecStart=/storage/.kodi/addons/service.system.docker/bin/docker run --rm \
                      --name %p \
                      -v /storage/downloads:/downloads \
-                     -v /storage/transmission/config:/config \
-                     -p 9091 \
-                     -p 45555/tcp \
-                     -p 45555/udp \
+                     -v /storage/transmission-daemon/config:/config \
+                     -p 9091:9091 \
+                     -p 45555:45555/tcp \
+                     -p 45555:45555/udp \
                      vhsw/transmission
  
 [Install]

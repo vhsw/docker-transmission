@@ -17,9 +17,9 @@ docker run -d \
     --name transmission
     -v ~/Downloads:/downloads \
     -v ./config:/config \
-    -p 9091 \
-    -p 45555/tcp \
-    -p 45555/udp \
+    -p 9091:9091 \
+    -p 45555:45555/tcp \
+    -p 45555:45555/udp \
     vhsw/transmission
 ```
 
@@ -42,8 +42,8 @@ docker run -d \
         -v *your_final_dir:/downloads \
         -v *your_incomplete_dir:/incomplete \
         -v *your_config_location*:/config \
-        -p 9091 \
-        -p 45555/tcp \
-        -p 45555/udp \
+        -p 9091:9091 \
+        -p 45555:45555/tcp \
+        -p 45555:45555/udp \
         transmission
 ```
