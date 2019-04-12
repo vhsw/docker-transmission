@@ -8,6 +8,8 @@ Restart=always
 RestartSec=1m
 StartLimitInterval=0
 StartLimitBurst=0
+ExecStartPre=sysctl -w net.core.rmem_max=4194304
+ExecStartPre=sysctl -w net.core.wmem_max=1048576
 ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker stop %p
 ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker rm %p
 ExecStartPre=-/storage/.kodi/addons/service.system.docker/bin/docker pull vhsw/transmission
